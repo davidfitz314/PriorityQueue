@@ -11,6 +11,7 @@ User Functions:
     Insert(element);
 
       //Inserts an element into the priority queue.
+      
     remove();
 
       //Removes the highest priority element from the queue.
