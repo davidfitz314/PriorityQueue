@@ -56,6 +56,7 @@ BinaryHeap.prototype = {
         //test if heap is empty
         if (this.isEmptyBH()){
             this.myList.push(myNode);
+            myNode.nIndex = 0;
             this.store[myNode.value] = myNode;
             return;
         }
@@ -64,7 +65,7 @@ BinaryHeap.prototype = {
         //test if element is already in the heap
         if (myNode.value in this.store){
             //if in heap search for location of element
-            var n = this.find_update(myNode, 0);
+            var n = this.find_update(myNode);
             if (!n){
                 console.log("false duplicate",myNode.value);
                 return;
@@ -74,26 +75,25 @@ BinaryHeap.prototype = {
         
         //if not already in heap insert into bottom of heap then bubble up.
         this.myList.push(myNode);
+        myNode.nIndex = this.size()-1;
         this.store[element] = myNode;
         this.bubble(this.size() -1);
         //console.log("current max",this.myList[0]);
         return
     },
 
-    find_update: function(element, index) {
+    //Uses the lookup table to find the index of each element, then updates the heap.
+    find_update: function(element) {
         //finds specific element in heap and updates its priority
-        if (this.myList[index].value == element.value){
+        if (this.store[element.value]){
             //update element priority
+            var index = this.store[element.value].nIndex;
             this.myList[index].priority += 1;
             //bubble up if necessary
             this.bubble(index);
             return true;
         }
         
-        //recursively increment index and search again
-        if ((index+1)*2 < this.size()){
-            return this.find_update(element, (index+1)*2) || this.find_update(element, (index+1)*2-1); 
-        }
         return false;
     },
     
@@ -118,6 +118,11 @@ BinaryHeap.prototype = {
             //swap parent with child
             this.myList[p_location] = element;
             this.myList[new_size] = parent;
+            
+            //update indexes of both parent and child in store
+            this.store[element.value].nIndex = p_location;
+            this.store[parent.value].nIndex = new_size;
+            //continue bubble
             new_size = p_location;
         }
     },
@@ -186,6 +191,12 @@ BinaryHeap.prototype = {
             //swap old element with new child element
             this.myList[location] = swap;
             this.myList[swap_index] = element;
+            
+            //update store elements index
+            this.store[swap.value].nIndex = location;
+            this.store[element.value].nIndex = swap_index;
+            //console.log("swapped index are ", this.store[swap.value].nIndex, ",", this.store[element.value].nIndex);
+            //continue sink
             location = swap_index;
         }
     },
@@ -197,7 +208,7 @@ BinaryHeap.prototype = {
     
 }
 
-//***Test area***//
+
 mybin = new BinaryHeap();
 
 for (var i = 0; i<=20; i++){
@@ -218,3 +229,4 @@ for (var i = 0; i<mybin.size(); i++){
     console.log(mybin.myList[i]);
 }
 console.log("***end heap***");
+
