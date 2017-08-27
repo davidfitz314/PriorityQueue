@@ -28,7 +28,7 @@ Non User Functions:
 
     find_update(element, index);
 
-      //Recursively loops through the binary heaps branches to find and update an elments priority.
+      //Uses a hash table to look up the element and update its priority, then it sends it to bubble to update it's position.
 
     deleteNode(element);
 
