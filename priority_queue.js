@@ -33,7 +33,7 @@ function BinaryHeap() {
     this.myList = [];
     this.store = {};
 }
-
+ 
 //everything that happens in the binary heap
 BinaryHeap.prototype = {
     //find size of the heap
