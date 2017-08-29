@@ -141,13 +141,16 @@ BinaryHeap.prototype = {
         var last = this.myList.pop();
         //replace empty spot with element from bottom then sink it down again
         this.myList[0] = last;
+        this.myList[0].nIndex = 0;
         this.sink(0);
+        
     },
     
     //Lowers an element with low priority to the correct position in the heap
     sink: function(location) {
         //grab the element to be sunk
         var element = this.myList[location];
+        
         while(true){
             //compute child elements
             var childR_loc = (location + 1) *2;
@@ -160,6 +163,7 @@ BinaryHeap.prototype = {
                 //grab the child node
                 var childL = this.myList[childL_loc];
                 if (childL.priority > element.priority){
+                    
                     swap = childL;
                     swap_index = childL_loc;
                 }
@@ -170,23 +174,25 @@ BinaryHeap.prototype = {
                 //grab the child node
                 var childR = this.myList[childR_loc];
                 //test for childL and childR vs element priority
-            
-                if (swap != null){
-                    if (childR.priority > swap.priority){
+                if (childR.priority > element.priority){
+                    if (swap != null){
+                        if (childR.priority > swap.priority){
+                            swap = childR;
+                            swap_index = childR_loc;
+                        }
+                    }
+                    
+                    if (swap == null){
                         swap = childR;
                         swap_index = childR_loc;
                     }
                 }
                 
-                if (swap == null){
-                    swap = childR;
-                    swap_index = childR_loc;
-                }
             }
             
             //if no swap then break
             if (swap == null)
-                return;
+                return;            
             
             //swap old element with new child element
             this.myList[location] = swap;
@@ -208,7 +214,7 @@ BinaryHeap.prototype = {
     
 }
 
-
+//***Test Section***//
 mybin = new BinaryHeap();
 
 for (var i = 0; i<=20; i++){
@@ -229,4 +235,3 @@ for (var i = 0; i<mybin.size(); i++){
     console.log(mybin.myList[i]);
 }
 console.log("***end heap***");
-
