@@ -126,7 +126,8 @@ BinaryHeap.prototype = {
             new_size = p_location;
         }
     },
-        remove: function() {
+    
+    remove: function() {
         //pop the max-priority off the queue
         //var max_index = this.find_max(this.myList[0]);
         
