@@ -126,8 +126,7 @@ BinaryHeap.prototype = {
             new_size = p_location;
         }
     },
-    
-    remove: function() {
+        remove: function() {
         //pop the max-priority off the queue
         //var max_index = this.find_max(this.myList[0]);
         
@@ -139,6 +138,10 @@ BinaryHeap.prototype = {
         }
         
         var last = this.myList.pop();
+        //delete from object/hash table
+        this.store[last.value] === undefined;
+        delete this.store[last.value];
+        
         //replace empty spot with element from bottom then sink it down again
         this.myList[0] = last;
         this.myList[0].nIndex = 0;
